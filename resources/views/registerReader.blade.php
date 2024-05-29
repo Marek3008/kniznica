@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/register-reader" method="POST">
+    <form action="/register/reader" method="POST">
         @csrf
         <label for="meno">Meno:</label>
         <input type="text" name="meno">

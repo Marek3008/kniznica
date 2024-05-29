@@ -1,13 +1,12 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BorrowRecordController;
+use App\Http\Controllers\RegisterItemController;
 use App\Models\Book;
-use App\Models\BorrowRecord;
 use App\Models\Fine;
-use App\Models\Reader;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Carbon\Carbon;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,86 +26,38 @@ Route::get('/', function () {
     return view('index', ["available" => $available, "unavailable" => $unavailable]);
 });
 
-Route::get('/login', function () {
-    return view('login');
+Route::get('/login', [AuthController::class, 'index']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/logout', [AuthController::class, 'logout']);
+
+
+Route::middleware('auth')->prefix('register')->group(function () {
+
+    Route::get('/book', [RegisterItemController::class, 'createBook'])->name('register.book.create');
+    Route::post('/book', [RegisterItemController::class, 'storeBook'])->name('register.book.store');
+
+    Route::get('/reader', [RegisterItemController::class, 'createReader'])->name('register.reader.create');
+    Route::post('/reader', [RegisterItemController::class, 'storeReader'])->name('register.reader.store');
+
+    Route::get('/librarian', [RegisterItemController::class, 'createLibrarian'])->name('register.librarian.create');
+    Route::post('/librarian', [RegisterItemController::class, 'storeLibrarian'])->name('register.librarian.store');
 });
 
-Route::post('/login', function(Request $request){
-    $credentials = $request->validate([
-        'email' => ['required', 'email'],
-        'password' => ['required'],
-    ]);
 
-    if (Auth::attempt($credentials)) {
-        $request->session()->regenerate();
+Route::middleware('auth')->prefix('borrow-records')->group(function () {
 
-        return redirect('/');
-    }
+    Route::get('/', [BorrowRecordController::class, 'list'])->name('borrow-records.list');
+
+    Route::get('/create', [BorrowRecordController::class, 'create'])->name('borrow-records.create');
+    Route::post('/create', [BorrowRecordController::class, 'store'])->name('borrow-records.store');
+
+    Route::get('/close/{id}', [BorrowRecordController::class, 'close'])->name('borrow-records.close');
 });
 
-Route::get('/logout', function(Request $request){
-    Auth::logout();
- 
-    $request->session()->invalidate();
- 
-    $request->session()->regenerateToken();
- 
-    return redirect('/');
-});
 
-Route::get('/register-book', function(){
-    return view('registerBook');
-});
 
-Route::post('/register-book', function(Request $request){
-    $request["stav"] = 1;
-    Book::create($request->all());
-    return redirect('/');
-});
-
-Route::get('/borrow-records', function(){
-    $ongoingRecords = BorrowRecord::whereNull('datum_vratenia')->get();
-    $archivedRecords = BorrowRecord::whereNotNull('datum_vratenia')->get();
-
-    return view('borrowRecords', ["ongoingRecords" => $ongoingRecords, "archivedRecords" => $archivedRecords]);
-});
-
-Route::get('/borrow-records/create', function(){
-    $availableBooks = Book::where('stav', 1)->get();
-    $readers = Reader::all();
-
-    return view('createRecord', ["books" => $availableBooks, "readers" => $readers]);
-});
-
-Route::post('/borrow-records/create', function(Request $request){
-    $request["datum_vypozicky"] = Carbon::today();
-    $request["odhadovany_datum_vratenia"] = Carbon::today()->addWeeks(3);
-    $request["datum_vratenia"] = null;
-
-    BorrowRecord::create($request->all());
-});
-
-Route::get('/register-reader', function(){
-    return view('registerReader');
-});
-
-Route::post('/register-reader', function(Request $request){
-    Reader::create($request->all());
-    return redirect('/');
-});
-
-Route::get('/close-record-{id}', function($id){
-    $record = BorrowRecord::find($id);
-    $record->datum_vratenia = Carbon::today();
-    $record->save();
-
-    $record->fine->delete();
-
-    return redirect()->back();
-});
-
-Route::get('create-fine-{id}', function($id){
+Route::get('/create-fine-{id}', function ($id) {
     $fine = Fine::create(["vypozicka_id" => $id, "ciastka" => 2]);
 
     return redirect()->back();
-});
+})->middleware('auth')->name('fine.create');

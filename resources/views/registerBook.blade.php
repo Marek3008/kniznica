@@ -23,7 +23,7 @@
             </ul>
         </nav>
     </header>
-    <form action="/register-book" method="POST">
+    <form action="/register/book" method="POST">
         @csrf
         <label for="isbn">ISBN:</label>
         <input type="number" name="isbn">

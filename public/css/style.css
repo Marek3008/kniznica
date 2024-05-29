@@ -10,21 +10,10 @@ body {
     font-family: 'Lato', sans-serif;
     height: 100vh;
     position: relative;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
 }
 
 header {
     background-color: #ffa94d;
-}
-
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 400px;
 }
 
 footer {
@@ -36,26 +25,16 @@ footer {
 .navbar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
-    padding: 20px;
+    padding: 30px;
 }
 
 .navbar ul {
     list-style: none;
+
     display: flex;
-    gap: 30px;
-}
+    gap: 20px;
 
-.book-container-content {
-    height: 320px;
-    overflow-y: auto;
-    margin-left: 20px;
-}
-
-.book-container-content p:not(:last-child) {
-    margin-bottom: 5px;
-}
-
-.book-container-heading {
-    margin-bottom: 20px;
+    margin-right: 20px;
 }
