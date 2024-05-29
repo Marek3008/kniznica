@@ -13,12 +13,14 @@
             <h1>MIESTNA KNIŽNICA</h1>
             <ul class="navbar-list">
                 @auth
-                    <li class="navbar-list--item"><a href="/borrow-record">Urobiť výpožičku</a></li>
+                    <li class="navbar-list--item"><a href="/borrow-records">Výpožičky</a></li>
                     <li class="navbar-list--item"><a href="/register-book">Pridaj knihu</a></li>
                     <li class="navbar-list--item"><a href="/register-reader">Registruj čitateľa</a></li>
                 @endauth
 
+                @guest
                 <li class="navbar-list--item"><a href="/login">Prihlásiť sa</a></li>
+                @endguest
 
                 @auth
                     <li class="navbar-list--item"><a href="/logout">Odhlásiť sa</a></li>    

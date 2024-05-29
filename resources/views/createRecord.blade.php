@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/borrow-record" method="POST">
+    <form action="/borrow-records/create" method="POST">
         @csrf
         <label for="kniha">Kniha: </label>
         <select name="kniha" id="">

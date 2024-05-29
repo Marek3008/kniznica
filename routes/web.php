@@ -2,6 +2,7 @@
 
 use App\Models\Book;
 use App\Models\BorrowRecord;
+use App\Models\Fine;
 use App\Models\Reader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,14 +64,21 @@ Route::post('/register-book', function(Request $request){
     return redirect('/');
 });
 
-Route::get('/borrow-record', function(){
+Route::get('/borrow-records', function(){
+    $ongoingRecords = BorrowRecord::whereNull('datum_vratenia')->get();
+    $archivedRecords = BorrowRecord::whereNotNull('datum_vratenia')->get();
+
+    return view('borrowRecords', ["ongoingRecords" => $ongoingRecords, "archivedRecords" => $archivedRecords]);
+});
+
+Route::get('/borrow-records/create', function(){
     $availableBooks = Book::where('stav', 1)->get();
     $readers = Reader::all();
 
-    return view('borrowRecord', ["books" => $availableBooks, "readers" => $readers]);
+    return view('createRecord', ["books" => $availableBooks, "readers" => $readers]);
 });
 
-Route::post('/borrow-record', function(Request $request){
+Route::post('/borrow-records/create', function(Request $request){
     $request["datum_vypozicky"] = Carbon::today();
     $request["odhadovany_datum_vratenia"] = Carbon::today()->addWeeks(3);
     $request["datum_vratenia"] = null;
@@ -85,4 +93,20 @@ Route::get('/register-reader', function(){
 Route::post('/register-reader', function(Request $request){
     Reader::create($request->all());
     return redirect('/');
+});
+
+Route::get('/close-record-{id}', function($id){
+    $record = BorrowRecord::find($id);
+    $record->datum_vratenia = Carbon::today();
+    $record->save();
+
+    $record->fine->delete();
+
+    return redirect()->back();
+});
+
+Route::get('create-fine-{id}', function($id){
+    $fine = Fine::create(["vypozicka_id" => $id, "ciastka" => 2]);
+
+    return redirect()->back();
 });

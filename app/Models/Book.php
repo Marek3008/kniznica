@@ -11,6 +11,7 @@ class Book extends Model
 
     protected $table = "kniha";
     protected $guarded = [];
+    protected $primaryKey = "isbn";
 
     public $timestamps = false;
 }
