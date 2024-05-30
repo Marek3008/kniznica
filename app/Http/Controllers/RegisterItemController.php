@@ -19,6 +19,11 @@ class RegisterItemController extends Controller
 
     public function storeBook(Request $request)
     {
+
+        if (Book::where('isbn', $request["isbn"])->exists()) {
+            return redirect()->back();
+        }
+
         $request["stav"] = 1;
         Book::create($request->all());
         return redirect('/');
@@ -31,6 +36,16 @@ class RegisterItemController extends Controller
 
     public function storeReader(Request $request)
     {
+
+        if (
+            Reader::where('meno', $request["meno"])->exists() and
+            Reader::where('priezvisko', $request["priezvisko"])->exists() and
+            Reader::where('datum_narodenia', $request["datum_narodenia"])->exists() and
+            Reader::where('telefonne_cislo', $request["telefonne_cislo"])
+        ) {
+            return;
+        }
+
         Reader::create($request->all());
         return redirect('/');
     }
@@ -42,6 +57,11 @@ class RegisterItemController extends Controller
 
     public function storeLibrarian(Request $request)
     {
+
+        if (User::where('email', $request["email"])->exists()) {
+            return redirect('/');
+        }
+
         User::create([
             "name" => $request["name"] . " " . $request["surname"],
             "email" => $request["email"],

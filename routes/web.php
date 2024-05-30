@@ -5,6 +5,7 @@ use App\Http\Controllers\BorrowRecordController;
 use App\Http\Controllers\RegisterItemController;
 use App\Models\Book;
 use App\Models\Fine;
+use App\Models\Reader;
 use Illuminate\Support\Facades\Route;
 
 
@@ -26,7 +27,7 @@ Route::get('/', function () {
     return view('index', ["available" => $available, "unavailable" => $unavailable]);
 });
 
-Route::get('/login', [AuthController::class, 'index']);
+Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout']);
 
@@ -54,7 +55,11 @@ Route::middleware('auth')->prefix('borrow-records')->group(function () {
     Route::get('/close/{id}', [BorrowRecordController::class, 'close'])->name('borrow-records.close');
 });
 
+Route::get('/readers', function () {
+    $readers = Reader::all();
 
+    return view('readers', ["readers" => $readers]);
+})->middleware('auth');
 
 Route::get('/create-fine-{id}', function ($id) {
     $fine = Fine::create(["vypozicka_id" => $id, "ciastka" => 2]);

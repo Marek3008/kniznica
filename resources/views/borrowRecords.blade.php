@@ -3,7 +3,8 @@
 @section('title', 'Výpožičky')
 
 @section('content')
-<div class="ongoing-records">
+<div style="display: flex; position: relative; gap: 100px;">
+<div class="ongoing-records records">
     <h1>Práve vypožičané</h1>
     @foreach ($ongoingRecords as $record)
     <div class="borrow-record" @style(["background-color: #ff6b6b;" => $record->fine])>
@@ -24,7 +25,7 @@
     </div>
     @endforeach
 </div>
-<div class="archived-records">
+<div class="archived-records records">
     <h1>Archivované</h1>
     @foreach ($archivedRecords as $record)
         <div class="borrow-record">
@@ -37,5 +38,7 @@
         </div>
     @endforeach
 </div>
-<a href="/borrow-records/create">Urobiť Výpožičku</a>    
+</div>
+<br>
+<a style="position: absolute; bottom: 130px;" href="/borrow-records/create">Urobiť Výpožičku</a>    
 @endsection

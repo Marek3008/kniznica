@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: 127.0.0.1
--- Čas generovania: St 29.Máj 2024, 16:29
--- Verzia serveru: 10.4.27-MariaDB
--- Verzia PHP: 8.0.25
+-- Čas generovania: Št 30.Máj 2024, 20:52
+-- Verzia serveru: 10.4.28-MariaDB
+-- Verzia PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -41,8 +41,9 @@ CREATE TABLE `citatel` (
 --
 
 INSERT INTO `citatel` (`id`, `meno`, `priezvisko`, `telefonne_cislo`, `datum_narodenia`, `adresa`) VALUES
-(1, 'Marek', 'Baňas', '0944507621', '2006-08-30', 'Horný Vadičov'),
-(2, 'Jaro', 'Bugr', '+421907444444', '2006-05-05', 'zilina');
+(2, 'Jaro', 'Bugr', '+421907444444', '2006-05-05', 'zilina'),
+(3, 'Timko', 'Dolník', '0907111111111', '2005-11-17', 'Kunderland'),
+(4, 'Adam', 'Ladňák', '+421222222222', '2006-04-25', 'krasno');
 
 -- --------------------------------------------------------
 
@@ -65,7 +66,7 @@ CREATE TABLE `kniha` (
 
 INSERT INTO `kniha` (`isbn`, `nazov`, `autor`, `rok_vydania`, `zaner`, `stav`) VALUES
 (1111111111111, 'Six of Crows', 'Leigh Bardugo', 2016, 'Fantasy', 1),
-(9784456728019, 'Harry Potter', 'J. K.', 2006, 'Mysteriozny', 0),
+(9784456728019, 'Harry Potter', 'J. K.', 2006, 'Mysteriozny', 1),
 (9785432167890, 'Vojna a mier', 'Tolstoj', 1950, 'historicky', 1),
 (9789988776654, 'Som Baťa', 'Jozef Banáš', 2023, 'autobiografia', 1);
 
@@ -122,17 +123,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Darlene Schamberger', 'babshire@example.net', '2024-05-26 14:01:45', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6ai2Zfm4ek', '2024-05-26 14:01:46', '2024-05-26 14:01:46'),
-(2, 'Mrs. Clementina Kshlerin', 'jmurray@example.org', '2024-05-26 14:01:45', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'r5An5oeJl2', '2024-05-26 14:01:46', '2024-05-26 14:01:46'),
-(3, 'Noemy Crooks', 'ugleason@example.org', '2024-05-26 14:01:45', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'HWR42dzN3f', '2024-05-26 14:01:46', '2024-05-26 14:01:46'),
-(4, 'Jerald Nader', 'ydietrich@example.org', '2024-05-26 14:01:45', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0GNeyJt8e9', '2024-05-26 14:01:46', '2024-05-26 14:01:46'),
-(5, 'Ulises Schaden', 'morar.payton@example.com', '2024-05-26 14:01:45', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '43Aeg37Ot3', '2024-05-26 14:01:46', '2024-05-26 14:01:46'),
-(6, 'Saige Bayer', 'emerald37@example.com', '2024-05-26 14:01:45', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'G4NzGTUtK7', '2024-05-26 14:01:46', '2024-05-26 14:01:46'),
-(7, 'Nels Konopelski', 'ezemlak@example.net', '2024-05-26 14:01:45', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'ua9J9lubDO', '2024-05-26 14:01:46', '2024-05-26 14:01:46'),
-(8, 'Ariane Green', 'skuhlman@example.net', '2024-05-26 14:01:45', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'yyfGJpCTu9', '2024-05-26 14:01:46', '2024-05-26 14:01:46'),
-(9, 'Prof. Antone Miller Jr.', 'pouros.nicholas@example.net', '2024-05-26 14:01:45', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'f7lbjYOCVC', '2024-05-26 14:01:46', '2024-05-26 14:01:46'),
-(10, 'Carmella Bernhard', 'fadel.timothy@example.org', '2024-05-26 14:01:45', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'FJnYpPSz4a', '2024-05-26 14:01:46', '2024-05-26 14:01:46'),
-(11, 'Test User', 'test@example.com', '2024-05-26 14:01:46', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'c6drxzmaQ045WNszjtcF2doZyLmQ3hfnStzk17ne4sg55CQCBmbQGSNzoALv', '2024-05-26 14:01:46', '2024-05-26 14:01:46');
+(11, 'Test User', 'test@example.com', '2024-05-26 14:01:46', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'lllOq253LWaySSosuNs2R75JplAhdyxJkXv8e4i0rmjfda0xZeOjurIewRIv', '2024-05-26 14:01:46', '2024-05-26 14:01:46'),
+(12, 'Marek Baňas', 'banasmre@gmail.com', NULL, '$2y$10$1jjlq6RfLO.EmOE6Haf3uuHoRek5IGR2EYXH6Lo2pHzQrb9EH5kDW', NULL, '2024-05-29 13:01:56', '2024-05-29 13:01:56');
 
 -- --------------------------------------------------------
 
@@ -154,8 +146,9 @@ CREATE TABLE `vypozicka` (
 --
 
 INSERT INTO `vypozicka` (`id`, `kniha`, `citatel_id`, `odhadovany_datum_vratenia`, `datum_vypozicky`, `datum_vratenia`) VALUES
-(1, 9785432167890, 1, '2024-06-17', '2024-05-27', '2024-05-28'),
-(2, 1111111111111, 1, '2024-06-18', '2024-05-28', '2024-05-28');
+(3, 1111111111111, 2, '2024-06-19', '2024-05-29', '2024-05-29'),
+(12, 9784456728019, 3, '2024-06-20', '2024-05-30', '2024-05-30'),
+(13, 9785432167890, 4, '2024-06-20', '2024-05-30', '2024-05-30');
 
 --
 -- Kľúče pre exportované tabuľky
@@ -209,7 +202,7 @@ ALTER TABLE `vypozicka`
 -- AUTO_INCREMENT pre tabuľku `citatel`
 --
 ALTER TABLE `citatel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pre tabuľku `migrations`
@@ -221,19 +214,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT pre tabuľku `pokuta`
 --
 ALTER TABLE `pokuta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pre tabuľku `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT pre tabuľku `vypozicka`
 --
 ALTER TABLE `vypozicka`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Obmedzenie pre exportované tabuľky

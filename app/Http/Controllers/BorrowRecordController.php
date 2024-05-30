@@ -28,11 +28,21 @@ class BorrowRecordController extends Controller
 
     public function store(Request $request)
     {
+
+        if (BorrowRecord::where('kniha', $request["kniha"])->where('citatel_id', $request["citatel_id"])->whereNull('datum_vratenia')->exists()) {
+            return redirect('/borrow-records');
+        }
+
+
+
         $request["datum_vypozicky"] = Carbon::today();
         $request["odhadovany_datum_vratenia"] = Carbon::today()->addWeeks(3);
         $request["datum_vratenia"] = null;
 
-        BorrowRecord::create($request->all());
+        $record = BorrowRecord::create($request->all());
+
+        $record->book->stav = 0;
+        $record->book->save();
 
         return redirect('/borrow-records');
     }
@@ -41,6 +51,8 @@ class BorrowRecordController extends Controller
     {
         $record = BorrowRecord::find($id);
         $record->datum_vratenia = Carbon::today();
+        $record->book->stav = 1;
+        $record->book->save();
         $record->save();
 
         if ($record->fine) {
